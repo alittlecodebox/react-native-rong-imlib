@@ -10,10 +10,10 @@
 		09B385661CC20D5300BB85ED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B385651CC20D5300BB85ED /* AVFoundation.framework */; };
 		09B385681CC20D5900BB85ED /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B385671CC20D5900BB85ED /* CoreAudio.framework */; };
 		09B80B331CC8ED5500E37B9A /* RCTRongCloudVoiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B80B321CC8ED5500E37B9A /* RCTRongCloudVoiceManager.m */; };
+		5C74E2671E65521500681005 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C74E2641E65521500681005 /* libopencore-amrnb.a */; };
+		5C74E2681E65521500681005 /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C74E2661E65521500681005 /* RongIMLib.framework */; };
 		91B363D21C57459700137B9C /* RCTRongCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 91B363D11C57459700137B9C /* RCTRongCloud.h */; };
 		91B363D41C57459700137B9C /* RCTRongCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B363D31C57459700137B9C /* RCTRongCloud.m */; };
-		91B363F41C5747BD00137B9C /* RongIMLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B363F31C5747BD00137B9C /* RongIMLib.framework */; };
-		91EC70AD1C5753A4001FDC90 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91EC70AC1C5753A4001FDC90 /* libopencore-amrnb.a */; };
 		91EC70B01C575424001FDC90 /* RCTConvert+RongCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EC70AF1C575424001FDC90 /* RCTConvert+RongCloud.m */; };
 /* End PBXBuildFile section */
 
@@ -35,11 +35,12 @@
 		09B385671CC20D5900BB85ED /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		09B80B311CC8ED5500E37B9A /* RCTRongCloudVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTRongCloudVoiceManager.h; sourceTree = "<group>"; };
 		09B80B321CC8ED5500E37B9A /* RCTRongCloudVoiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTRongCloudVoiceManager.m; sourceTree = "<group>"; };
+		5C74E2641E65521500681005 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		5C74E2651E65521500681005 /* RCConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RCConfig.plist; sourceTree = "<group>"; };
+		5C74E2661E65521500681005 /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongIMLib.framework; sourceTree = "<group>"; };
 		91B363CE1C57459700137B9C /* libRCTRongCloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTRongCloud.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B363D11C57459700137B9C /* RCTRongCloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTRongCloud.h; sourceTree = "<group>"; };
 		91B363D31C57459700137B9C /* RCTRongCloud.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTRongCloud.m; sourceTree = "<group>"; };
-		91B363F31C5747BD00137B9C /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RongIMLib.framework; sourceTree = "<group>"; };
-		91EC70AC1C5753A4001FDC90 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		91EC70AE1C575424001FDC90 /* RCTConvert+RongCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+RongCloud.h"; sourceTree = "<group>"; };
 		91EC70AF1C575424001FDC90 /* RCTConvert+RongCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+RongCloud.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,9 +51,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				09B385681CC20D5900BB85ED /* CoreAudio.framework in Frameworks */,
+				5C74E2671E65521500681005 /* libopencore-amrnb.a in Frameworks */,
+				5C74E2681E65521500681005 /* RongIMLib.framework in Frameworks */,
 				09B385661CC20D5300BB85ED /* AVFoundation.framework in Frameworks */,
-				91B363F41C5747BD00137B9C /* RongIMLib.framework in Frameworks */,
-				91EC70AD1C5753A4001FDC90 /* libopencore-amrnb.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,8 +95,9 @@
 		91B363F21C5747BD00137B9C /* RongCloudSDK */ = {
 			isa = PBXGroup;
 			children = (
-				91EC70AC1C5753A4001FDC90 /* libopencore-amrnb.a */,
-				91B363F31C5747BD00137B9C /* RongIMLib.framework */,
+				5C74E2641E65521500681005 /* libopencore-amrnb.a */,
+				5C74E2651E65521500681005 /* RCConfig.plist */,
+				5C74E2661E65521500681005 /* RongIMLib.framework */,
 			);
 			path = RongCloudSDK;
 			sourceTree = "<group>";

@@ -73,7 +73,7 @@ RCT_EXPORT_MODULE(RCTRongIMLib);
       withString:@""]
      stringByReplacingOccurrencesOfString:@" "
      withString:@""];
-
+    
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
 }
 
@@ -129,7 +129,7 @@ RCT_EXPORT_METHOD(getLatestMessages: (RCConversationType) type targetId:(NSStrin
                   resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
     NSArray* array = [[RCIMClient sharedRCIMClient] getLatestMessages:type targetId:targetId count:count];
-
+    
     NSMutableArray* newArray = [NSMutableArray new];
     for (RCMessage* msg in array) {
         NSDictionary* convDic = [self.class _convertMessage:msg];
@@ -140,8 +140,8 @@ RCT_EXPORT_METHOD(getLatestMessages: (RCConversationType) type targetId:(NSStrin
 
 RCT_EXPORT_METHOD(removeConversation: (RCConversationType) type targetId:(NSString*) targetId)
 {
-  RCIMClient* client = [RCIMClient sharedRCIMClient];
-  [client removeConversation: type targetId: targetId];
+    RCIMClient* client = [RCIMClient sharedRCIMClient];
+    [client removeConversation: type targetId: targetId];
 }
 
 RCT_EXPORT_METHOD(sendMessage: (RCConversationType) type targetId:(NSString*) targetId content:(NSDictionary*) json
@@ -162,33 +162,33 @@ RCT_EXPORT_METHOD(sendMessage: (RCConversationType) type targetId:(NSString*) ta
                 RCIMClient* client = [RCIMClient sharedRCIMClient];
                 RCMessage* msg = [client sendImageMessage:type targetId:targetId content:content pushContent:pushContent
                                                  progress:^(int progress, long messageId) {
-
+                                                     
                                                  }
-                                             success:^(long messageId){
-                                                 [_bridge.eventDispatcher sendAppEventWithName:@"msgSendOk" body:@(messageId)];
-                                             } error:^(RCErrorCode code, long messageId){
-                                                 NSMutableDictionary* dic = [NSMutableDictionary new];
-                                                 dic[@"messageId"] = @(messageId);
-                                                 dic[@"errCode"] = @((int)code);
-                                                 [_bridge.eventDispatcher sendAppEventWithName:@"msgSendFailed" body:dic];
-                                             }];
+                                                  success:^(long messageId){
+                                                      [_bridge.eventDispatcher sendAppEventWithName:@"msgSendOk" body:@(messageId)];
+                                                  } error:^(RCErrorCode code, long messageId){
+                                                      NSMutableDictionary* dic = [NSMutableDictionary new];
+                                                      dic[@"messageId"] = @(messageId);
+                                                      dic[@"errCode"] = @((int)code);
+                                                      [_bridge.eventDispatcher sendAppEventWithName:@"msgSendFailed" body:dic];
+                                                  }];
                 resolve([self.class _convertMessage:msg]);
             });
         }];
-
+        
         return;
     }
     RCMessageContent* content = [RCTConvert RCMessageContent:json];
     RCIMClient* client = [RCIMClient sharedRCIMClient];
     RCMessage* msg = [client sendMessage:type targetId:targetId content:content pushContent:pushContent
-                success:^(long messageId){
-                    [_bridge.eventDispatcher sendAppEventWithName:@"msgSendOk" body:@(messageId)];
-                } error:^(RCErrorCode code, long messageId){
-                    NSMutableDictionary* dic = [NSMutableDictionary new];
-                    dic[@"messageId"] = @(messageId);
-                    dic[@"errCode"] = @((int)code);
-                    [_bridge.eventDispatcher sendAppEventWithName:@"msgSendFailed" body:dic];
-                }];
+                                 success:^(long messageId){
+                                     [_bridge.eventDispatcher sendAppEventWithName:@"msgSendOk" body:@(messageId)];
+                                 } error:^(RCErrorCode code, long messageId){
+                                     NSMutableDictionary* dic = [NSMutableDictionary new];
+                                     dic[@"messageId"] = @(messageId);
+                                     dic[@"errCode"] = @((int)code);
+                                     [_bridge.eventDispatcher sendAppEventWithName:@"msgSendFailed" body:dic];
+                                 }];
     resolve([self.class _convertMessage:msg]);
 }
 
@@ -266,8 +266,10 @@ RCT_EXPORT_METHOD(getConversationNotificationStatus:(RCConversationType) type ta
         switch (nStatus) {
             case DO_NOT_DISTURB:
                 resolve(@(YES));
+                break;
             default:
                 resolve(@(NO));
+                break;
         }
     } error:^(RCErrorCode status) {
         reject([NSString stringWithFormat:@"%ld", status], @"Failed", nil);
@@ -291,6 +293,36 @@ RCT_EXPORT_METHOD(clearMessages:(RCConversationType) type targetId:(NSString*) t
     resolve(nil);
 }
 
+RCT_EXPORT_METHOD( joinChatRoom:(NSString*) targetId  messageCount:(int)messageCount resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    RCIMClient* client = [RCIMClient sharedRCIMClient];
+    [client joinChatRoom:targetId messageCount:messageCount success:^{
+        resolve(nil);
+    } error:^(RCErrorCode status) {
+        reject([NSString stringWithFormat:@"%ld", status], @"Failed", nil);
+    }];
+}
+
+RCT_EXPORT_METHOD(quitChatRoom:(NSString*) targetId   resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    RCIMClient* client = [RCIMClient sharedRCIMClient];
+    [client quitChatRoom:targetId success:^{
+        resolve(nil);
+    } error:^(RCErrorCode status) {
+        reject([NSString stringWithFormat:@"%ld", status], @"Failed", nil);
+    }];
+};
+
+RCT_EXPORT_METHOD(getRemoteChatroomHistoryMessages:(NSString*) targetId recordTime:(NSString*)recordTime count:(int)count  resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    RCIMClient* client = [RCIMClient sharedRCIMClient];
+    [client getRemoteChatroomHistoryMessages:targetId recordTime:[recordTime longLongValue] count:count order:RC_Timestamp_Desc
+                                     success:^(NSArray *messages, long long syncTime) {
+                                         resolve(messages);
+                                     } error:^(RCErrorCode status) {
+                                         reject([NSString stringWithFormat:@"%ld", status], @"Failed", nil);
+                                     }];
+};
 #pragma mark - delegate
 - (void)onReceived:(RCMessage *)message
               left:(int)nLeft
@@ -359,7 +391,7 @@ RCT_EXPORT_METHOD(clearMessages:(RCConversationType) type targetId:(NSString*) t
     dic[@"targetId"] = conversation.targetId;
     dic[@"unreadCount"] = @(conversation.unreadMessageCount);
     dic[@"lastMessage"] = [self _converMessageContent:conversation.lastestMessage];
-
+    
     dic[@"isTop"] = @(conversation.isTop);
     dic[@"receivedStatus"] = @(conversation.receivedStatus);
     dic[@"sentStatus"] = @(conversation.sentStatus);
@@ -368,9 +400,9 @@ RCT_EXPORT_METHOD(clearMessages:(RCConversationType) type targetId:(NSString*) t
     dic[@"draft"] = conversation.draft;
     dic[@"objectName"] = conversation.objectName;
     dic[@"senderUserId"] = conversation.senderUserId;
-
+    
     dic[@"conversationTitle"] = conversation.conversationTitle;
-
+    
     dic[@"jsonDict"] = conversation.jsonDict;
     dic[@"lastestMessageId"] = @(conversation.lastestMessageId);
     return dic;
@@ -403,7 +435,7 @@ RCT_EXPORT_METHOD(clearMessages:(RCConversationType) type targetId:(NSString*) t
     dic[@"receivedTime"] = @(message.receivedTime);
     dic[@"sentTime"] = @(message.sentTime);
     dic[@"content"] = [self _converMessageContent:message.content];
-
+    
     dic[@"messageDirection"] = @(message.messageDirection);
     dic[@"receivedStatus"] = @(message.receivedStatus);
     dic[@"sentStatus"] = @(message.sentStatus);
